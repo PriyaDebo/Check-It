@@ -2,11 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
-        <bitmap android:src="@drawable/launch_image" />
+        <bitmap android:src="@drawable/bg_resolution" />
         android:gravity="center"
         Size size = MediaQuery.of(context).size;
         Positioned(
         width: size.width,
-        child: "@drawable/launch_image",)
+        child: "@drawable/bg_resolution",)
     </item>
 </layer-list>

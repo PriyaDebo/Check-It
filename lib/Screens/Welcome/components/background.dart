@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
@@ -13,31 +12,23 @@ class Background extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.height,
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-            top: 0,
-            child: SvgPicture.asset(
-              "assets/icons/up_wave.svg",
-              height: size.height * 0.3,
-              width: size.width,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: SvgPicture.asset(
-              "assets/icons/down_wave.svg",
-              height: size.height * 0.3,
-              width: size.width,
-            ),
-          ),
-          child,
-
-        ],
-      ),
+    alignment: Alignment.center,
+    height: size.height,
+    width: double.infinity,
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/images/bg_plain.png"),
+    fit: BoxFit.fill,
+    ),
+    ),
+    child:
+    SafeArea(
+    child: Scaffold(
+    backgroundColor: Colors.transparent,
+    body: Container(
+    child: this.child,
+    alignment: Alignment.center,
+    ))),
     );
   }
 }

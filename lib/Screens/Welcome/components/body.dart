@@ -4,7 +4,6 @@ import 'package:check_it/Screens/Welcome/components/background.dart';
 import 'package:check_it/all_components/rounded_button.dart';
 import 'package:check_it/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Body extends StatelessWidget {
@@ -21,7 +20,7 @@ class Body extends StatelessWidget {
           style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height*0.05, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: size.height * 0.004),
-        SvgPicture.asset("assets/icons/ic_launcher.svg", height: size.height * 0.12),
+        Image.asset("assets/images/ic_launcher.png", height: size.height * 0.12),
         SizedBox(height: size.height * 0.04),
         RoundButton(
           text: "LOGIN",

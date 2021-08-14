@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
@@ -11,49 +10,28 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Container(
+      alignment: Alignment.center,
       height: size.height,
       width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          // Positioned(
-          //   top: 0,
-          //   child: SvgPicture.asset(
-          //     "assets/icons/up_wave.svg",
-          //     height: size.height * 0.3,
-          //     width: size.width,
-          //   ),
-          // ),
-          // Positioned(
-          //   bottom: 0,
-          //   child: SvgPicture.asset(
-          //     "assets/icons/down_wave.svg",
-          //     height: size.height * 0.3,
-          //     width: size.width,
-          //   ),
-          // ),
-          // child,
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                     begin: Alignment.topRight,
-                     end: Alignment.bottomLeft,
-                    colors: [
-                      Color(0xff539092),
-                      Color(0xff8bcfcc),
-                      Color(0xffaee8e6),
-                      Color(0xfffdffe7),
-                      Color(0xffaee8e6),
-                      Color(0xff8bcfcc),
-                      Color(0xff539092),
-
-                    ])),
-          ),
-          child
-        ],
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/bg_r_to_l.png"),
+          fit: BoxFit.fill,
+        ),
       ),
+      child:
+      SafeArea(
+          child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Container(
+                child: this.child,
+                alignment: Alignment.center,
+              ))),
     );
   }
 }
+

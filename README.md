@@ -37,7 +37,7 @@ After creating an account in the app, the users can create various types of chec
  - All the data will be stored against an account rather than a local host. So, the app can be used on various devices simultaneously. 
 
 ###### Tools to be used: 
-- Frontend: React Native 
+- Frontend: Flutter 
 - Backend:  Node Js 
 - API: Express Js 
 - Database: MongoDB 

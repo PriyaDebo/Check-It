@@ -16,52 +16,12 @@ class Background extends StatelessWidget {
       height: size.height,
       width: double.infinity,
       decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-        Color(0xff539092),
-        Color(0xff8bcfcc),
-        Color(0xffaee8e6),
-        Color(0xfffdffe7),
-        Color(0xffaee8e6),
-        Color(0xff8bcfcc),
-        Color(0xff539092),
-      ])),
+        image: DecorationImage(
+          image: AssetImage("assets/images/bg_l_to_r.png"),
+          fit: BoxFit.fill,
+        ),
+      ),
       child:
-          // Stack(
-          //   alignment: Alignment.center,
-          //   children: <Widget>[
-          //     // Positioned(
-          //     //   top: 0,
-          //     //   child: SvgPicture.asset(
-          //     //     "assets/icons/up_wave.svg",
-          //     //     height: size.height * 0.3,
-          //     //     width: size.width,
-          //     //   ),
-          //     // ),
-          //     // Positioned(
-          //     //   bottom: 0,
-          //     //   child: SvgPicture.asset(
-          //     //     "assets/icons/down_wave.svg",
-          //     //     height: size.height * 0.3,
-          //     //     width: size.width,
-          //     //   ),
-          //     // ),
-          //     // child,
-          //     Container(
-          //       decoration: BoxDecoration(
-          //           gradient: LinearGradient(
-          //               begin: Alignment.topLeft,
-          //               end: Alignment.bottomRight,
-          //               colors: [
-          //                 Color(0xff539092),
-          //                 Color(0xff8bcfcc),
-          //                 Color(0xffaee8e6),
-          //                 Color(0xfffdffe7),
-          //                 Color(0xffaee8e6),
-          //                 Color(0xff8bcfcc),
-          //                 Color(0xff539092),
-          //
-          //               ])),
-          //     ),
           SafeArea(
               child: Scaffold(
                   backgroundColor: Colors.transparent,

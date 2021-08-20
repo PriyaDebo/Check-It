@@ -24,12 +24,12 @@ class Background extends StatelessWidget {
         ),
       ),
       child:
-      SafeArea(
-          child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                child: this.child,
-                alignment: Alignment.center,
+          SafeArea(
+              child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: Container(
+                      child: this.child,
+                      alignment: Alignment.center,
               ))),
     );
   }

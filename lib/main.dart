@@ -1,4 +1,4 @@
-import 'package:check_it/Screens/Welcome/Welcome.dart';
+import 'package:check_it/Screens/Login/login_screen.dart';
 import 'package:check_it/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: kBackgroundColor,
       ),
-      home: WelcomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

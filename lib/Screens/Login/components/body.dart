@@ -10,11 +10,13 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    TextEditingController usernameController = new TextEditingController();
+    TextEditingController passwordController = new TextEditingController();
     return Background(
-        child: SingleChildScrollView(
+    child: SingleChildScrollView(
             child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
+          children: <Widget>[
         Text(
           "LOGIN",
           style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height * 0.06, fontWeight: FontWeight.bold),
@@ -26,6 +28,7 @@ class Body extends StatelessWidget {
           hintText: "Username",
           onChanged: (value) {},
           icon: Icons.person,
+          controller: usernameController,
           isObscure: false,
         ),
         SizedBox(height: size.height * 0.009),
@@ -34,11 +37,30 @@ class Body extends StatelessWidget {
           onChanged: (value) {},
           icon: Icons.lock,
           isObscure: true,
+          controller: passwordController,
         ),
         SizedBox(height: size.height * 0.009),
         RoundButton(
           text: "LOGIN",
-          press: () {},
+          press: () {
+            FocusScope.of(context).unfocus();
+            final username = usernameController.text.trim();
+            final password = passwordController.text.trim();
+            if (username.isEmpty) {
+              final snackBar = SnackBar(
+                content: Text("Username Required"),
+                behavior: SnackBarBehavior.floating,
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+            else if (password.isEmpty) {
+              final snackBar = SnackBar(
+                content: Text("Password required"),
+                behavior: SnackBarBehavior.floating,
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          },
           color: kPrimaryColor,
           textColor: kPrimaryLightColor,
         ),

@@ -1,9 +1,10 @@
-import 'package:check_it/Screens/Login/login_screen.dart';
-import 'package:check_it/Screens/Signup//components/background.dart';
+import 'package:check_it/Screens/Login/components/background.dart';
+import 'package:check_it/Screens/Signup/signup_screen.dart';
 import 'package:check_it/all_components/rounded_button.dart';
 import 'package:check_it/all_components/rounded_input_field.dart';
 import 'package:check_it/constants.dart';
-import 'package:check_it/services/signup_service.dart';
+import 'package:check_it/operations/user_bl.dart';
+import 'package:check_it/screens/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,13 +15,13 @@ class Body extends StatelessWidget {
     TextEditingController usernameController = new TextEditingController();
     TextEditingController passwordController = new TextEditingController();
     return Background(
-        child: SingleChildScrollView(
+    child: SingleChildScrollView(
             child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
+          children: <Widget>[
         Text(
-          "SIGN UP",
-          style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height*0.06, fontWeight: FontWeight.bold),
+          "LOGIN",
+          style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height * 0.06, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: size.height * 0.003),
         Image.asset("assets/images/ic_launcher.png", height: size.height * 0.12),
@@ -29,8 +30,8 @@ class Body extends StatelessWidget {
           hintText: "Username",
           onChanged: (value) {},
           icon: Icons.person,
-          isObscure: false,
           controller: usernameController,
+          isObscure: false,
         ),
         SizedBox(height: size.height * 0.009),
         RoundInputField(
@@ -42,27 +43,19 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: size.height * 0.009),
         RoundButton(
-          text: "SIGN UP",
-          press: () {
+          text: "LOGIN",
+          press: () async {
             FocusScope.of(context).unfocus();
             final username = usernameController.text.trim();
             final password = passwordController.text.trim();
-            if (username.isEmpty) {
-              final snackBar = SnackBar(
-                content: Text("Username Required"),
-                behavior: SnackBarBehavior.floating,
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            }
-            else if (password.isEmpty) {
-              final snackBar = SnackBar(
-                content: Text("Password required"),
-                behavior: SnackBarBehavior.floating,
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            if (checkValidity(username, password, context)) {
+              if (await UserBl().validLogin(username, password)) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+              }
             }
             else {
-              final user_model = createUser(username, password);
+              final snackBar = SnackBar(content: Text("Invalid Credentials"),behavior: SnackBarBehavior.floating,);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           },
           color: kPrimaryColor,
@@ -73,25 +66,45 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Already have an account? ",
-              style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height*0.025),
+              "Don't have an account? ",
+              style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height * 0.025),
             ),
             GestureDetector(
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => SignUpScreen(),
                     ));
               },
               child: Text(
-                "LOGIN",
-                style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold), fontSize: size.height*0.025),
+                "SIGN UP",
+                style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold), fontSize: size.height * 0.025),
               ),
             ),
           ],
         )
       ],
     )));
+  }
+
+  bool checkValidity(String username, String password, context) {
+    if (username.isEmpty) {
+      final snackBar = SnackBar(
+        content: Text("Username Required"),
+        behavior: SnackBarBehavior.floating,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return false;
+    }
+    else if (password.isEmpty) {
+      final snackBar = SnackBar(
+        content: Text("Password required"),
+        behavior: SnackBarBehavior.floating,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return false;
+    }
+    return true;
   }
 }

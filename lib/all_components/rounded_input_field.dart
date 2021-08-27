@@ -24,7 +24,6 @@ class RoundInputField extends RoundContainer {
       controller: controller,
       onChanged: onChanged,
       obscureText: isObscure,
-      keyboardType: TextInputType.text,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.only(bottom: size.height * 0.02),
         prefixIcon: Icon(

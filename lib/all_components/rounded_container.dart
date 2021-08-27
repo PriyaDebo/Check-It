@@ -1,4 +1,3 @@
-import 'package:check_it/constants.dart';
 import 'package:flutter/material.dart';
 
 abstract class RoundContainer extends StatelessWidget {

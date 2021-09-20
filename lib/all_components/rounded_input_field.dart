@@ -7,6 +7,7 @@ class RoundInputField extends RoundContainer {
   final IconData icon;
   final bool isObscure;
   final ValueChanged<String> onChanged;
+  final TextEditingController? controller;
 
   const RoundInputField({
     Key? key,
@@ -14,27 +15,31 @@ class RoundInputField extends RoundContainer {
     required this.icon,
     required this.onChanged,
     required this.isObscure,
+    this.controller,
   }) : super(key: key);
 
   @override
   Widget getChild(size) {
     return TextField(
+      controller: controller,
       onChanged: onChanged,
       obscureText: isObscure,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(bottom: size.height*0.02),
+        contentPadding: EdgeInsets.only(bottom: size.height * 0.02),
         prefixIcon: Icon(
           icon,
-          color: kPrimaryColor,
+          color: kDarkBlue,
         ),
         hintText: hintText,
         filled: true,
-        fillColor: kPrimaryLightColor,
+        fillColor: kWhite,
         border: OutlineInputBorder(
-            borderSide: BorderSide(color: kPrimaryColor,),
-            borderRadius: BorderRadius.circular(size.width*0.05)),
+            borderSide: BorderSide(
+              color: kDarkBlue,
+            ),
+            borderRadius: BorderRadius.circular(size.width * 0.05)),
       ),
-      cursorColor: kPrimaryColor,
+      cursorColor: kDarkBlue,
     );
   }
 }

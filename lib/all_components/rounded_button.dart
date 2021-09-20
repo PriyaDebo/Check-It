@@ -13,13 +13,13 @@ class RoundButton extends RoundContainer {
     Key? key,
     required this.text,
     required this.press,
-    this.color = kPrimaryColor,
-    this.textColor = kPrimaryLightColor,
+    this.color = kDarkBlue,
+    this.textColor = kWhite,
   }) : super(key: key);
 
   @override
   Widget getChild(size) {
-    var textStyle = GoogleFonts.comicNeue(
+    var textStyle = GoogleFonts.comfortaa(
       textStyle: TextStyle(fontSize: size.height*0.02, fontWeight: FontWeight.bold),
     );
     var shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(size.height*0.02));

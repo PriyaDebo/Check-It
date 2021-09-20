@@ -14,7 +14,7 @@ class Body extends StatelessWidget {
       children: <Widget>[
       Text(
       "Coming Soon",
-      style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height * 0.06, fontWeight: FontWeight.bold),
+      style: GoogleFonts.comfortaa(textStyle: TextStyle(color: kDarkBlue), fontSize: size.height * 0.06, fontWeight: FontWeight.bold),
     ),
   ]
       )

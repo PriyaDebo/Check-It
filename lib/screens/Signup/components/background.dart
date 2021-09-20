@@ -19,7 +19,7 @@ class Background extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg_r_to_l.png"),
+          image: AssetImage("assets/images/login_page.png"),
           fit: BoxFit.fill,
         ),
       ),
@@ -27,6 +27,7 @@ class Background extends StatelessWidget {
           SafeArea(
               child: Scaffold(
                   backgroundColor: Colors.transparent,
+                resizeToAvoidBottomInset: false,
                   body: Container(
                       child: this.child,
                       alignment: Alignment.center,

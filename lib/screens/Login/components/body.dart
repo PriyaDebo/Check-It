@@ -9,11 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Body extends StatelessWidget {
+
+  final UserBl userBl;
+  Body(this.userBl);
+
+  final TextEditingController usernameController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    TextEditingController usernameController = new TextEditingController();
-    TextEditingController passwordController = new TextEditingController();
+
+
     return Background(
     child: SingleChildScrollView(
             child: Column(
@@ -21,10 +27,8 @@ class Body extends StatelessWidget {
           children: <Widget>[
         Text(
           "LOGIN",
-          style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height * 0.06, fontWeight: FontWeight.bold),
+          style: GoogleFonts.comfortaa(textStyle: TextStyle(color: kDarkBlue), fontSize: size.height * 0.04, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: size.height * 0.003),
-        Image.asset("assets/images/ic_launcher.png", height: size.height * 0.12),
         SizedBox(height: size.height * 0.02),
         RoundInputField(
           hintText: "Username",
@@ -49,7 +53,7 @@ class Body extends StatelessWidget {
             final username = usernameController.text.trim();
             final password = passwordController.text.trim();
             if (checkValidity(username, password, context)) {
-              if (await UserBl().validLogin(username, password)) {
+              if (await userBl.validLogin(username, password)) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
               }
             }
@@ -58,8 +62,8 @@ class Body extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           },
-          color: kPrimaryColor,
-          textColor: kPrimaryLightColor,
+          color: kDarkBlue,
+          textColor: kWhite,
         ),
         SizedBox(height: size.height * 0.01),
         Row(
@@ -67,23 +71,24 @@ class Body extends StatelessWidget {
           children: <Widget>[
             Text(
               "Don't have an account? ",
-              style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height * 0.025),
+              style: GoogleFonts.comfortaa(textStyle: TextStyle(color: kDarkBlue), fontSize: size.height * 0.025),
             ),
             GestureDetector(
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SignUpScreen(),
+                      builder: (context) => SignUpScreen(userBl),
                     ));
               },
               child: Text(
                 "SIGN UP",
-                style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold), fontSize: size.height * 0.025),
+                style: GoogleFonts.comfortaa(textStyle: TextStyle(color: kDarkBlue, fontWeight: FontWeight.bold), fontSize: size.height * 0.025),
               ),
             ),
           ],
-        )
+        ),
+            SizedBox(height: size.height * 0.1),
       ],
     )));
   }

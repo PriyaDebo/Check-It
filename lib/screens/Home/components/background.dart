@@ -15,12 +15,6 @@ class Background extends StatelessWidget {
       alignment: Alignment.center,
       height: size.height,
       width: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/bg_l_to_r.png"),
-          fit: BoxFit.fill,
-        ),
-      ),
       child:
       SafeArea(
           child: Scaffold(

@@ -28,18 +28,18 @@ class RoundInputField extends RoundContainer {
         contentPadding: EdgeInsets.only(bottom: size.height * 0.02),
         prefixIcon: Icon(
           icon,
-          color: kPrimaryColor,
+          color: kDarkBlue,
         ),
         hintText: hintText,
         filled: true,
-        fillColor: kPrimaryLightColor,
+        fillColor: kWhite,
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: kPrimaryColor,
+              color: kDarkBlue,
             ),
             borderRadius: BorderRadius.circular(size.width * 0.05)),
       ),
-      cursorColor: kPrimaryColor,
+      cursorColor: kDarkBlue,
     );
   }
 }

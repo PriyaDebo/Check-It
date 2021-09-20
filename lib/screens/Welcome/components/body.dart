@@ -3,6 +3,7 @@ import 'package:check_it/Screens/Signup/signup_screen.dart';
 import 'package:check_it/Screens/Welcome/components/background.dart';
 import 'package:check_it/all_components/rounded_button.dart';
 import 'package:check_it/constants.dart';
+import 'package:check_it/operations/user_bl.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +18,7 @@ class Body extends StatelessWidget {
       children: <Widget>[
         Text(
           "Welcome to Check It!",
-          style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kPrimaryColor), fontSize: size.height*0.05, fontWeight: FontWeight.bold),
+          style: GoogleFonts.comicNeue(textStyle: TextStyle(color: kDarkBlue), fontSize: size.height*0.05, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: size.height * 0.004),
         Image.asset("assets/images/ic_launcher.png", height: size.height * 0.12),
@@ -29,12 +30,12 @@ class Body extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                   LoginScreen(),
+                   LoginScreen(UserBl()),
               ),
             );
           },
-          color: kPrimaryColor,
-          textColor: kPrimaryLightColor,
+          color: kDarkBlue,
+          textColor: kWhite,
         ),
         SizedBox(height: size.height * 0.04),
         RoundButton(
@@ -42,12 +43,12 @@ class Body extends StatelessWidget {
           press: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SignUpScreen(),
+              MaterialPageRoute(builder: (context) => SignUpScreen(UserBl()),
               )
             );
           },
-          color: kPrimaryLightColor,
-          textColor: kPrimaryColor,
+          color: kWhite,
+          textColor: kDarkBlue,
         )
       ],
     )));

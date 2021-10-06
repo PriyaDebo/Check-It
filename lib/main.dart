@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
       title: 'Check It!',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: kDarkBlue,
-        scaffoldBackgroundColor: kWhite,
+        primaryColor: kYellow,
+        scaffoldBackgroundColor: kDarkBlue,
       ),
       home: LoginScreen(userBl),
     );

@@ -17,7 +17,6 @@ class UserBl {
     final res = await userService.loginUser(username, password);
     if (res.statusCode == 200 || res.statusCode == 201) {
       final authUser = await authorizedUser(res.body);
-      print(authUser);
       return true;
     }
     return false;

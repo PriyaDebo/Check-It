@@ -1,3 +1,4 @@
+import 'package:check_it/constants.dart';
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
@@ -18,7 +19,7 @@ class Background extends StatelessWidget {
       child:
       SafeArea(
           child: Scaffold(
-              backgroundColor: Colors.transparent,
+              backgroundColor: kWhite,
               body: Container(
                 child: this.child,
                 alignment: Alignment.center,

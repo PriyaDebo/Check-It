@@ -5,7 +5,7 @@ import 'package:check_it/models/users_model.dart';
 import 'package:http/http.dart' as http;
 
 class UserService {
-  final uriLink = "http://192.168.2.104:3000/users";
+  final uriLink = "http://192.168.2.101:3000/users";
   final header = <String, String>{'Content-Type': 'application/json; charset=UTF-8',};
 
   Future<int> signupUser(String username, String password) async {
@@ -16,7 +16,6 @@ class UserService {
       headers: header,
       body: jsonEncode(user.toJson()),
     );
-    print (response.body);
     return response.statusCode;
     }
 
@@ -42,7 +41,6 @@ class UserService {
       },
     );
     final responseJson = jsonDecode(response.body);
-    print(responseJson);
     return UserModel.fromJson(responseJson);
   }
 }

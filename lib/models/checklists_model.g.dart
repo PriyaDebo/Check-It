@@ -11,7 +11,9 @@ CheckListModel _$CheckListModelFromJson(Map<String, dynamic> json) {
     json['id'] as String?,
     json['userId'] as String,
     json['name'] as String,
-    ItemsModel.fromJson(json['items'] as Map<String, dynamic>),
+    (json['items'] as List<dynamic>)
+        .map((e) => ItemsModel.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 

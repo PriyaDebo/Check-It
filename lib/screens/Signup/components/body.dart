@@ -52,8 +52,9 @@ class Body extends StatelessWidget {
             final username = usernameController.text.trim();
             final password = passwordController.text.trim();
             if (checkValidity(username, password, context)) {
-              if (await userBl.validSignup(username, password)) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+              final result = await userBl.validSignup(username, password);
+              if (result != "FAIL") {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(result, username),));
               }
               else {
                 final snackBar = SnackBar(

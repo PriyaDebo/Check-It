@@ -8,7 +8,7 @@ class CheckListModel {
   String? id;
   String userId;
   String name;
-  ItemsModel items;
+  List<ItemsModel> items;
 
   CheckListModel(this.id, this.userId, this.name,  this.items);
 

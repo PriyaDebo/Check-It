@@ -8,7 +8,7 @@ part of 'alllists_model.dart';
 
 AllListsModel _$AllListsModelFromJson(Map<String, dynamic> json) {
   return AllListsModel(
-    (json['allLists'] as List<dynamic>)
+    (json['lists'] as List<dynamic>)
         .map((e) => CheckListModel.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
@@ -16,5 +16,5 @@ AllListsModel _$AllListsModelFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$AllListsModelToJson(AllListsModel instance) =>
     <String, dynamic>{
-      'allLists': instance.allLists,
+      'lists': instance.lists,
     };

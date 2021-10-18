@@ -26,5 +26,4 @@ class UserBl {
     final res = await userService.getUser(token);
     return res;
   }
-
 }

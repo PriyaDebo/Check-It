@@ -2,15 +2,20 @@ import 'package:check_it/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistItem extends StatefulWidget {
-  final newUuid;
-  final removeItem;
+
   ChecklistItem(
     Key? key,
     this.newUuid,
     this.removeItem
   ) : super(key: key);
+
+  final newUuid;
+  final removeItem;
   final TextEditingController item = new TextEditingController();
+  final FocusNode focusNode = new FocusNode();
+
   bool isChecked = false;
+
   @override
   _ChecklistItemState createState() => _ChecklistItemState();
 }
@@ -20,8 +25,6 @@ class _ChecklistItemState extends State<ChecklistItem> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print("_ChecklistItemState"+ widget.item.text.trim());
-    print("_ChecklistItemState NewUuid" + widget.newUuid);
     return Row(
       children: <Widget>[
         Checkbox(
@@ -36,6 +39,7 @@ class _ChecklistItemState extends State<ChecklistItem> {
         ),
         Expanded(
           child: TextFormField(
+            focusNode: widget.focusNode,
             controller: widget.item,
             maxLines: null,
             decoration: InputDecoration(
@@ -46,7 +50,6 @@ class _ChecklistItemState extends State<ChecklistItem> {
         ),
          IconButton(
             onPressed: () {
-              print(widget.newUuid);
               widget.removeItem(widget.newUuid);
             },
             icon: Icon(Icons.clear_outlined))

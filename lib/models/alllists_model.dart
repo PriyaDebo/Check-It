@@ -7,9 +7,9 @@ part 'alllists_model.g.dart';
 @JsonSerializable()
 class AllListsModel {
 
-  List<CheckListModel> allLists;
+  List<CheckListModel> lists;
 
-  AllListsModel(this.allLists);
+  AllListsModel(this.lists);
 
   factory AllListsModel.fromJson(Map<String, dynamic> json) => _$AllListsModelFromJson(json);
 

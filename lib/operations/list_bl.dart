@@ -10,15 +10,11 @@ class ListBl {
 
   Future<bool> createList(String userId, String listName, Map<String, ChecklistItem> items) async {
     List<ItemsModel> listItems = [];
-    for (int i = 0; i < items.length; i++) {
-      print(items.values.elementAt(i).item.text.trim());
-      listItems.elementAt(i).itemName = items.values.elementAt(i).item.text.trim();
-      listItems.elementAt(i).isChecked = items.values.elementAt(i).isChecked;
-      print(items.values);
-    }
+    items.forEach((key, value) {
+      var item = ItemsModel(value.item.text.trim(), value.isChecked);
+      listItems.add(item);
+    });
     final res = await listService.createList(null, userId, listName, listItems);
-    print("here");
-    print(res);
     return res == 200;
   }
 
@@ -27,5 +23,22 @@ class ListBl {
      final responseJson = jsonDecode(res.body);
      return AllListsModel.fromJson(responseJson);
   }
+
+  Future<bool> updateList(String id, String userId, String listName, Map<String, ChecklistItem> items) async {
+    List<ItemsModel> listItems = [];
+    items.forEach((key, value) {
+      var item = ItemsModel(value.item.text.trim(), value.isChecked);
+      listItems.add(item);
+    });
+    final res = await listService.updateList(id, userId, listName, listItems);
+    return res == 200;
+  }
+
+  Future<bool> deleteList(String id) async {
+    final res = await listService.deleteList(id);
+    return res == 200;
+  }
+
+
 }
 

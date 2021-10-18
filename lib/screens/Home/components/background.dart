@@ -1,4 +1,5 @@
 import 'package:check_it/constants.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
@@ -16,14 +17,18 @@ class Background extends StatelessWidget {
       alignment: Alignment.center,
       height: size.height,
       width: double.infinity,
-      child:
-      SafeArea(
+      child: SafeArea(
           child: Scaffold(
               backgroundColor: kWhite,
-              body: Container(
-                child: this.child,
-                alignment: Alignment.center,
-              ))),
+              body: DoubleBackToCloseApp(
+                  snackBar: SnackBar(
+                    content: Text("Press again to exit"),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                  child: Container(
+                    child: this.child,
+                    alignment: Alignment.center,
+                  )))),
     );
   }
 }

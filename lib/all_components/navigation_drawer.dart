@@ -29,13 +29,9 @@ class NavigationDrawerWidget extends StatelessWidget {
             size,
             text: 'Lists',
             icon: Icons.list_alt ,
+            onTap: () => Navigator.pop(context),
           ),
           SizedBox(height: size.height * 0.0009),
-          buildMenuItem(
-            size,
-            text: 'Reminders',
-            icon: Icons.notifications_active_outlined,
-          ),
           Divider(
             color: kDarkBlue,
             indent: size.width * 0.03,
@@ -45,6 +41,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             size,
             text: 'Logout',
             icon: Icons.logout,
+            onTap: () {},
           )
         ],
       ),
@@ -55,6 +52,7 @@ class NavigationDrawerWidget extends StatelessWidget {
     Size size, {
     required String text,
     required IconData icon,
+    required Function() onTap,
   }) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
@@ -63,7 +61,7 @@ class NavigationDrawerWidget extends StatelessWidget {
         text,
         style: GoogleFonts.lora (textStyle: TextStyle(color: kDarkBlue), fontSize: size.height * 0.02, fontWeight: FontWeight.bold),
       ),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }

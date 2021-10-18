@@ -54,7 +54,7 @@ class Body extends StatelessWidget {
             if (checkValidity(username, password, context)) {
               final result = await userBl.validSignup(username, password);
               if (result != "FAIL") {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(result, username),));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(result, username),));
               }
               else {
                 final snackBar = SnackBar(
@@ -78,7 +78,7 @@ class Body extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => LoginScreen(new UserBl()),

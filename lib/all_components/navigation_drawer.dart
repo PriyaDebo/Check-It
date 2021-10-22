@@ -1,4 +1,7 @@
 import 'package:check_it/constants.dart';
+import 'package:check_it/operations/secure_bl.dart';
+import 'package:check_it/operations/user_bl.dart';
+import 'package:check_it/screens/Login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,7 +44,10 @@ class NavigationDrawerWidget extends StatelessWidget {
             size,
             text: 'Logout',
             icon: Icons.logout,
-            onTap: () {},
+            onTap: () {
+              UserSecureStorage.deleteAll();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(UserBl())));
+            },
           )
         ],
       ),

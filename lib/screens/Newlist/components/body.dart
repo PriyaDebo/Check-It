@@ -2,7 +2,9 @@ import 'package:check_it/all_components/checklist_item.dart';
 import 'package:check_it/constants.dart';
 import 'package:check_it/models/checklists_model.dart';
 import 'package:check_it/operations/list_bl.dart';
+import 'package:check_it/operations/user_bl.dart';
 import 'package:check_it/screens/Home/home_screen.dart';
+import 'package:check_it/screens/Login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -53,29 +55,33 @@ class _BodyState extends State<Body> {
                 if (widget.checklist == null) {
                   if (await ListBl().createList(widget.userId.toString(), widget.listName.text.trim(), widget.items)) {
                     final snackBar = SnackBar(
-                      content: Text("Checklist Saved!"),
+                      content: Text("Checklist Saved!", style: GoogleFonts.lora(),),
                       behavior: SnackBarBehavior.floating,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(widget.userId, widget.username)));
                   } else {
                     final snackBar = SnackBar(
-                      content: Text("Unable to save! Try to save again!"),
+                      content: Text("Unable to save! Try to save again!", style: GoogleFonts.lora(),),
                       behavior: SnackBarBehavior.floating,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 } else {
-                  if (await ListBl().updateList(widget.checklist!.id.toString(), widget.userId.toString(), widget.listName.text.trim(), widget.items)) {
+                  final res = await ListBl().updateList(widget.checklist!.id.toString(), widget.userId.toString(), widget.listName.text.trim(), widget.items);
+                  if (res == 200) {
                     final snackBar = SnackBar(
-                      content: Text("Checklist Saved!"),
+                      content: Text("Checklist Saved!", style: GoogleFonts.lora(color: kWhite),),
                       behavior: SnackBarBehavior.floating,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(widget.userId, widget.username)));
+                  } else if (res == 401) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OH NO! You were logged out!", style: GoogleFonts.lora(),)));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(UserBl())));
                   } else {
                     final snackBar = SnackBar(
-                      content: Text("Unable to save! Try to save again!"),
+                      content: Text("Unable to save! Try to save again!", style: GoogleFonts.lora(),),
                       behavior: SnackBarBehavior.floating,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -96,18 +102,22 @@ class _BodyState extends State<Body> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      content: Text("Are you sure you want to delete this checklist?"),
+                      backgroundColor: kYellow,
+                      content: Text("Are you sure you want to delete this checklist permanently?", style: GoogleFonts.lora(color: kDarkBlue, fontWeight: FontWeight.bold),),
                       actions: <Widget>[
                         TextButton(
                             onPressed: () async {
                               if (widget.checklist == null) {
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(widget.userId, widget.username)));
                               } else {
-                                if (await ListBl().deleteList(widget.checklist!.id.toString())) {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(widget.userId, widget.username)));
+                                final res = await ListBl().deleteList(widget.checklist!.id.toString());
+                                if (res == 200) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(widget.userId, widget.username)));
+                                } else if (res == 401) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(UserBl())));
                                 } else {
                                   final snackBar = SnackBar(
-                                    content: Text("Unable to delete! Try to save again!"),
+                                    content: Text("Unable to delete! Try to delete again!", style: GoogleFonts.lora(),),
                                     behavior: SnackBarBehavior.floating,
                                   );
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);

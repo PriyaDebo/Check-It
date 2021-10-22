@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:check_it/all_components/checklist_item.dart';
 import 'package:check_it/client/list_service.dart';
-import 'package:check_it/models/alllists_model.dart';
 import 'package:check_it/models/items_model.dart';
+import 'package:check_it/operations/secure_bl.dart';
+import 'package:http/http.dart';
 
 class ListBl {
   ListService listService = new ListService();
@@ -18,25 +17,27 @@ class ListBl {
     return res == 200;
   }
 
-  Future<AllListsModel> getAllList(String userId) async {
-     final res = await listService.getAllList(userId);
-     final responseJson = jsonDecode(res.body);
-     return AllListsModel.fromJson(responseJson);
+  Future<Response> getAllList() async {
+    String? value = await UserSecureStorage.getToken();
+    final res = await listService.getAllList(value.toString());
+    return res;
   }
 
-  Future<bool> updateList(String id, String userId, String listName, Map<String, ChecklistItem> items) async {
+  Future<int> updateList(String id, String userId, String listName, Map<String, ChecklistItem> items) async {
+    String? value = await UserSecureStorage.getToken();
     List<ItemsModel> listItems = [];
     items.forEach((key, value) {
       var item = ItemsModel(value.item.text.trim(), value.isChecked);
       listItems.add(item);
     });
-    final res = await listService.updateList(id, userId, listName, listItems);
-    return res == 200;
+    final res = await listService.updateList(value.toString(), id, userId, listName, listItems);
+    return res;
   }
 
-  Future<bool> deleteList(String id) async {
-    final res = await listService.deleteList(id);
-    return res == 200;
+  Future<int> deleteList(String id) async {
+    String? value = await UserSecureStorage.getToken();
+    final res = await listService.deleteList(id, value.toString());
+    return res;
   }
 
 

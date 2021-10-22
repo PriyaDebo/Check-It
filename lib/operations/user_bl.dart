@@ -1,5 +1,6 @@
 import 'package:check_it/client/user_service.dart';
 import 'package:check_it/models/users_model.dart';
+import 'package:check_it/operations/secure_bl.dart';
 
 class UserBl {
   UserService userService = new UserService();
@@ -24,6 +25,9 @@ class UserBl {
 
   Future<UserModel> authorizedUser(String token) async {
     final res = await userService.getUser(token);
+    UserSecureStorage.setToken(token);
+    UserSecureStorage.setUsername(res.username);
+    UserSecureStorage.setUserId(res.id.toString());
     return res;
   }
 }

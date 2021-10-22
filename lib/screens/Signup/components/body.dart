@@ -58,7 +58,7 @@ class Body extends StatelessWidget {
               }
               else {
                 final snackBar = SnackBar(
-                    content: Text("Username Exists. Try Again!"),
+                    content: Text("Username Exists. Try Again!", style: GoogleFonts.lora(),),
                     behavior: SnackBarBehavior.floating,
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -100,7 +100,7 @@ class Body extends StatelessWidget {
   bool checkValidity(String username, String password, BuildContext context) {
     if (username.isEmpty) {
       final snackBar = SnackBar(
-        content: Text("Username Required"),
+        content: Text("Username Required", style: GoogleFonts.lora(),),
         behavior: SnackBarBehavior.floating,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -108,7 +108,7 @@ class Body extends StatelessWidget {
     }
     else if (password.isEmpty) {
       final snackBar = SnackBar(
-        content: Text("Password required"),
+        content: Text("Password required", style: GoogleFonts.lora(),),
         behavior: SnackBarBehavior.floating,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

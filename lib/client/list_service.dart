@@ -20,32 +20,44 @@ class ListService {
     return response.statusCode;
   }
 
-  Future<int> updateList(String id, String userId, String name, List<ItemsModel> items) async {
+  Future<int> updateList(String token, String id, String userId, String name, List<ItemsModel> items) async {
     var checklist = new CheckListModel(id, userId, name, items);
     final uri = uriLink + "/update/id/" + id;
     final response = await http.patch(
       Uri.parse(uri),
-      headers: header,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
       body: jsonEncode(checklist.toJson()),
     );
     return response.statusCode;
   }
 
-  Future<int> deleteList(String id) async {
+  Future<int> deleteList(String id, String token) async {
     final uri = uriLink + "/delete/id/" + id;
     final response = await http.delete(
       Uri.parse(uri),
-      headers: header,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
       body: null,
     );
     return response.statusCode;
   }
 
-  Future<http.Response> getAllList(String id) async {
-    final uri = uriLink + "/getAll/id/" + id;
+  Future<http.Response> getAllList(String token) async {
+    final uri = uriLink + "/getAll";
     final response = await http.get(
       Uri.parse(uri),
-      headers: header,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      }
     );
     return response;
   }

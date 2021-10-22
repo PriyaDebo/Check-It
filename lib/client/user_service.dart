@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:check_it/models/users_model.dart';
+import 'package:check_it/operations/secure_bl.dart';
 import 'package:http/http.dart' as http;
 
 class UserService {

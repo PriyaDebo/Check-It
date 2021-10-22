@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:check_it/all_components/navigation_drawer.dart';
 import 'package:check_it/constants.dart';
 import 'package:check_it/models/alllists_model.dart';
 import 'package:check_it/models/checklists_model.dart';
 import 'package:check_it/operations/list_bl.dart';
+import 'package:check_it/operations/user_bl.dart';
 import 'package:check_it/screens/Home/components/background.dart';
+import 'package:check_it/screens/Login/login_screen.dart';
 import 'package:check_it/screens/Newlist/new_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 
 class Body extends StatefulWidget {
   final String? userId;
@@ -66,7 +72,7 @@ class _BodyState extends State<Body> {
             ),
             floatingActionButton: new FloatingActionButton(
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => NewList(null, widget.userId, widget.username),
@@ -78,7 +84,7 @@ class _BodyState extends State<Body> {
               foregroundColor: kDarkBlue,
             ),
             body: FutureBuilder<AllListsModel>(
-                  future: getAllChecklists(),
+                  future: getAllChecklists(context),
                   builder: (BuildContext context, AsyncSnapshot<AllListsModel> snapshot) {
                     Widget widgetChild;
                     if (snapshot.hasData) {
@@ -86,7 +92,7 @@ class _BodyState extends State<Body> {
                       widgetChild = ListView(children: createCards(size));
                     } else if (snapshot.hasError) {
                       widgetChild = SnackBar(
-                        content: Text(snapshot.error.toString()),
+                        content: Text(snapshot.error.toString(), style: GoogleFonts.lora(),),
                         behavior: SnackBarBehavior.floating,
                       );
                       // ScaffoldMessenger.of(context).showSnackBar(widgetChild);
@@ -114,7 +120,7 @@ class _BodyState extends State<Body> {
               child: InkWell(
                 splashColor: kYellow,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewList(element, widget.userId, widget.username)));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NewList(element, widget.userId, widget.username)));
                 },
                 child: Padding(
                     padding: EdgeInsets.all(size.height * 0.03),
@@ -160,7 +166,14 @@ class _BodyState extends State<Body> {
     return count / oneList.items.length;
   }
 
-  Future<AllListsModel> getAllChecklists() async {
-    return await ListBl().getAllList(widget.userId.toString());
+  Future<AllListsModel> getAllChecklists(context) async {
+    final res = await ListBl().getAllList();
+    if(res.statusCode == 401) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen(UserBl())));
+    }
+    final responseJson = jsonDecode(res.body);
+    return AllListsModel.fromJson(responseJson);
   }
 }

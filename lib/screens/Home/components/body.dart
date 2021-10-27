@@ -13,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class Body extends StatefulWidget {
   final String? userId;
   final String username;
@@ -41,49 +40,66 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Background(
-        child: Scaffold(
-            backgroundColor: kWhite,
-            drawer: NavigationDrawerWidget(widget.username),
-            appBar: AppBar(
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    setState(() {
-                      if (this.cusIcon.icon == Icons.search) {
-                        this.cusIcon = Icon(Icons.clear_outlined);
-                        this.cusSearchBar = TextField(
-                          decoration: InputDecoration(
-                            hintText: "Search your lists",
-                          ),
-                          textInputAction: TextInputAction.go,
-                          style: GoogleFonts.lora(textStyle: TextStyle(color: kDarkBlue)),
-                        );
-                      } else {
-                        this.cusIcon = Icon(Icons.search);
-                        this.cusSearchBar = Text("");
-                      }
-                    });
-                  },
-                  icon: cusIcon,
-                ),
-              ],
-              title: cusSearchBar,
-            ),
-            floatingActionButton: new FloatingActionButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewList(null, widget.userId, widget.username),
-                    ));
-              },
-              splashColor: kWhite,
-              child: const Icon(Icons.add),
-              backgroundColor: kYellow,
-              foregroundColor: kDarkBlue,
-            ),
-            body: FutureBuilder<AllListsModel>(
+        child: WillPopScope(
+            onWillPop: () async {
+              final difference = DateTime.now().difference(timeBackPressed);
+              final isExitWarning = difference >= Duration(seconds: 2);
+              timeBackPressed = DateTime.now();
+              if (isExitWarning) {
+                final message = "Press back again to exit";
+                final snackBar = SnackBar(
+                  content: Text(message),
+                  behavior: SnackBarBehavior.floating,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                return false;
+              } else {
+                return true;
+              }
+            },
+            child: Scaffold(
+              backgroundColor: kWhite,
+              drawer: new NavigationDrawerWidget(),
+              appBar: AppBar(
+                  // actions: <Widget>[
+                  //   IconButton(
+                  //     onPressed: () {
+                  //       FocusScope.of(context).unfocus();
+                  //       setState(() {
+                  //         if (this.cusIcon.icon == Icons.search) {
+                  //           this.cusIcon = Icon(Icons.clear_outlined);
+                  //           this.cusSearchBar = TextField(
+                  //             decoration: InputDecoration(
+                  //               hintText: "Search your lists",
+                  //             ),
+                  //             textInputAction: TextInputAction.go,
+                  //             style: GoogleFonts.lora(textStyle: TextStyle(color: kDarkBlue)),
+                  //           );
+                  //         } else {
+                  //           this.cusIcon = Icon(Icons.search);
+                  //           this.cusSearchBar = Text("");
+                  //         }
+                  //       });
+                  //     },
+                  //     icon: cusIcon,
+                  //   ),
+                  // ],
+                  // title: cusSearchBar,
+                  ),
+              floatingActionButton: new FloatingActionButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewList(null, widget.userId, widget.username),
+                      ));
+                },
+                splashColor: kWhite,
+                child: const Icon(Icons.add),
+                backgroundColor: kYellow,
+                foregroundColor: kDarkBlue,
+              ),
+              body: FutureBuilder<AllListsModel>(
                   future: getAllChecklists(context),
                   builder: (BuildContext context, AsyncSnapshot<AllListsModel> snapshot) {
                     Widget widgetChild;
@@ -92,7 +108,10 @@ class _BodyState extends State<Body> {
                       widgetChild = ListView(children: createCards(size));
                     } else if (snapshot.hasError) {
                       widgetChild = SnackBar(
-                        content: Text(snapshot.error.toString(), style: GoogleFonts.lora(),),
+                        content: Text(
+                          snapshot.error.toString(),
+                          style: GoogleFonts.lora(),
+                        ),
                         behavior: SnackBarBehavior.floating,
                       );
                       // ScaffoldMessenger.of(context).showSnackBar(widgetChild);
@@ -105,7 +124,7 @@ class _BodyState extends State<Body> {
                     }
                     return widgetChild;
                   }),
-            ));
+            )));
   }
 
   List<Card> createCards(Size size) {
@@ -168,10 +187,9 @@ class _BodyState extends State<Body> {
 
   Future<AllListsModel> getAllChecklists(context) async {
     final res = await ListBl().getAllList();
-    if(res.statusCode == 401) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginScreen(UserBl())));
+    if (res.statusCode == 401) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(UserBl())));
+      return new AllListsModel(new List.empty());
     }
     final responseJson = jsonDecode(res.body);
     return AllListsModel.fromJson(responseJson);

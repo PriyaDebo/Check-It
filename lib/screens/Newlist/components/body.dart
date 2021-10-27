@@ -53,16 +53,29 @@ class _BodyState extends State<Body> {
           TextButton(
               onPressed: () async {
                 if (widget.checklist == null) {
-                  if (await ListBl().createList(widget.userId.toString(), widget.listName.text.trim(), widget.items)) {
+                  var resCode = await ListBl().createList(widget.listName.text.trim(), widget.items);
+                  if (resCode == 200) {
                     final snackBar = SnackBar(
                       content: Text("Checklist Saved!", style: GoogleFonts.lora(),),
+                      duration: Duration(seconds: 1),
                       behavior: SnackBarBehavior.floating,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(widget.userId, widget.username)));
-                  } else {
+                  } else if(resCode == 401) {
+                    final snackBar = SnackBar(
+                      content: Text("OH NO! You were logged out!", style: GoogleFonts.lora(),),
+                      duration: Duration(seconds: 1),
+                      behavior: SnackBarBehavior.floating,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(UserBl())));
+                  }
+
+                  else {
                     final snackBar = SnackBar(
                       content: Text("Unable to save! Try to save again!", style: GoogleFonts.lora(),),
+                      duration: Duration(seconds: 2),
                       behavior: SnackBarBehavior.floating,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -72,6 +85,7 @@ class _BodyState extends State<Body> {
                   if (res == 200) {
                     final snackBar = SnackBar(
                       content: Text("Checklist Saved!", style: GoogleFonts.lora(color: kWhite),),
+                      duration: Duration(seconds: 1),
                       behavior: SnackBarBehavior.floating,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -82,6 +96,7 @@ class _BodyState extends State<Body> {
                   } else {
                     final snackBar = SnackBar(
                       content: Text("Unable to save! Try to save again!", style: GoogleFonts.lora(),),
+                      duration: Duration(seconds: 2),
                       behavior: SnackBarBehavior.floating,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -119,6 +134,7 @@ class _BodyState extends State<Body> {
                                   final snackBar = SnackBar(
                                     content: Text("Unable to delete! Try to delete again!", style: GoogleFonts.lora(),),
                                     behavior: SnackBarBehavior.floating,
+                                    duration: Duration(seconds: 2),
                                   );
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 }
@@ -154,11 +170,13 @@ class _BodyState extends State<Body> {
                       hintText: "Title",
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none),
+                  style: GoogleFonts.lora(textStyle: TextStyle(color: kDarkBlue, fontWeight: FontWeight.bold, fontSize: size.height * 0.03)),
                   textInputAction: TextInputAction.go,
                   controller: widget.listName,
                 ),
               ),
             ),
+            SizedBox(height: size.height * 0.02,),
             Flexible(
               fit: FlexFit.tight,
                 child: ListView.builder(

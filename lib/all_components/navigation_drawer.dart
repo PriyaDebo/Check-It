@@ -6,9 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class NavigationDrawerWidget extends StatelessWidget {
-  final String username;
-  NavigationDrawerWidget(this.username);
+class NavigationDrawerWidget extends StatefulWidget {
+
+  NavigationDrawerWidget();
+  @override
+  _NavigationState createState() => _NavigationState();
+}
+
+class _NavigationState extends State<NavigationDrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +26,21 @@ class NavigationDrawerWidget extends StatelessWidget {
           SizedBox(
             height: size.height * 0.1,
             child: DrawerHeader(
-              child: Text(username, style: GoogleFonts.sofia(textStyle: TextStyle(color: kDarkBlue), fontSize: size.height * 0.05, fontWeight: FontWeight.bold)),
+              child: FutureBuilder<String?> (
+                future: UserSecureStorage.getUsername(),
+                builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+                  String textData;
+                  if (snapshot.hasData) {
+                    textData = snapshot.data.toString();
+                  } else {
+                    textData = "Check It!";
+                  }
+                  return Text(textData, style: GoogleFonts.sofia(textStyle: TextStyle(color: kDarkBlue), fontSize: size.height * 0.05, fontWeight: FontWeight.bold));
+                }
+              ),
               decoration: new BoxDecoration(color: kYellow),
               margin: EdgeInsets.zero,
-              padding: EdgeInsets.fromLTRB(size.width * 0.04, size.height * 0.028, 0, 0),
+              padding: EdgeInsets.fromLTRB(size.width * 0.04, size.height * 0.02, 0, 0),
             ),
           ),
           SizedBox(height: size.height * 0.009),

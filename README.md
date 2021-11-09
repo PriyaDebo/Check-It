@@ -19,7 +19,8 @@
 **Step 1:**
 >Download or clone this repository by using the link given below. 
 ```
-https://github.com/PriyaDebo/Check-It.git```
+https://github.com/PriyaDebo/Check-It.git
+```
 **Step 2:**
 >Go to project root and execute the following command in console to get the required dependencies:
 ```

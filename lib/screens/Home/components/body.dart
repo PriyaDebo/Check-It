@@ -175,7 +175,7 @@ class _BodyState extends State<Body> {
   double progress(CheckListModel oneList) {
     double count = 0;
     if (oneList.items.length == 0) {
-      return count;
+      return 1;
     }
     oneList.items.forEach((element) {
       if (element.isChecked) {

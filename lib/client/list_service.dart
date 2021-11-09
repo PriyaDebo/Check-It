@@ -7,7 +7,7 @@ import 'package:check_it/operations/secure_bl.dart';
 import 'package:http/http.dart' as http;
 
 class ListService {
-  final uriLink = "http://192.168.0.102:3000/checklists";
+  final uriLink = "http://192.168.0.108:3000/checklists";
   final header = <String, String>{'Content-Type': 'application/json; charset=UTF-8',};
 
   Future<int> createList(String? id, String userId, String name, List<ItemsModel> items) async {

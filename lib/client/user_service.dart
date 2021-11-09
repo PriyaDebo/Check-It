@@ -6,7 +6,7 @@ import 'package:check_it/operations/secure_bl.dart';
 import 'package:http/http.dart' as http;
 
 class UserService {
-  final uriLink = "http://192.168.0.102:3000/users";
+  final uriLink = "http://192.168.0.108:3000/users";
   final header = <String, String>{'Content-Type': 'application/json; charset=UTF-8',};
 
   Future<int> signupUser(String username, String password) async {

@@ -41,10 +41,29 @@ flutter pub get
 ```After the app build completes, you’ll see the app on your device.```
 
 **Step 4:**
->To successfully run the app, you need to install the server side of the application too. To do the same head to the following repository and follow the steps as mentioned there.
+>To successfully run the app, you need to install and run the server side of the application to. To do the same head to the following repository and follow the steps as mentioned there.
 >
 > ([PriyaDebo/Check-It-Back-End (github.com)](https://github.com/PriyaDebo/Check-It-Back-End))
->
+
+**Step 5:**
+>Also, make sure that the emulator or the device and the server side of the application is running under the same internet connection. 
+>Check the ip address of your device and 
+```
+1. Open the file lib/client/list_service.dart
+2. Find the following code in line 10
+     final uriLink = "http://192.168.0.108:3000/checklists";
+3. Modify it with the ip configuration:
+     final uriLink = "http://<ip address>:3000/checklists;
+```
+```
+1. Open the file lib/client/user_service.dart
+2. Find the following code in line 9
+     final uriLink = "http://192.168.0.108:3000/users";
+3. Modify the ip address to match your ip address:
+     final uriLink = "http://<ip address>:3000/users;
+```
+>After completing the above steps, builld the application for one more time.
+
 ## Folder Structure:
 Here is the folder structure I have been using in this project:
 ```

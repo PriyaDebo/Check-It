@@ -1,6 +1,8 @@
 import 'package:check_it/Screens/Login/login_screen.dart';
 import 'package:check_it/constants.dart';
+import 'package:check_it/operations/secure_bl.dart';
 import 'package:check_it/operations/user_bl.dart';
+import 'package:check_it/screens/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,10 +19,10 @@ class MyApp extends StatelessWidget {
       title: 'Check It!',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: kDarkBlue,
-        scaffoldBackgroundColor: kWhite,
+        primaryColor: kYellow,
+        scaffoldBackgroundColor: kDarkBlue,
       ),
-      home: LoginScreen(userBl),
+      home: HomeScreen(UserSecureStorage.getUserId().toString(), UserSecureStorage.getUsername().toString())
     );
   }
 }

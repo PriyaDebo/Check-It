@@ -52,13 +52,15 @@ class Body extends StatelessWidget {
             final username = usernameController.text.trim();
             final password = passwordController.text.trim();
             if (checkValidity(username, password, context)) {
-              if (await userBl.validSignup(username, password)) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+              final result = await userBl.validSignup(username, password);
+              if (result != "FAIL") {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(result, username),));
               }
               else {
                 final snackBar = SnackBar(
-                    content: Text("Username Exists. Try Again!"),
-                    behavior: SnackBarBehavior.floating,
+                    content: Text("Username Exists. Try again!", style: GoogleFonts.lora(),),
+                  duration: Duration(seconds: 2),
+                  behavior: SnackBarBehavior.floating,
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }
@@ -77,7 +79,7 @@ class Body extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => LoginScreen(new UserBl()),
@@ -99,7 +101,8 @@ class Body extends StatelessWidget {
   bool checkValidity(String username, String password, BuildContext context) {
     if (username.isEmpty) {
       final snackBar = SnackBar(
-        content: Text("Username Required"),
+        content: Text("Username Required", style: GoogleFonts.lora(),),
+        duration: Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -107,8 +110,9 @@ class Body extends StatelessWidget {
     }
     else if (password.isEmpty) {
       final snackBar = SnackBar(
-        content: Text("Password required"),
+        content: Text("Password required", style: GoogleFonts.lora(),),
         behavior: SnackBarBehavior.floating,
+        duration: Duration(seconds: 2),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return false;

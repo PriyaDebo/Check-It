@@ -96,4 +96,7 @@ test/
 
 I will be happy to answer any questions that you may have regarding this project, and if you want to lend a hand with the project then please feel free to submit an issue and/or pull request.
 
+## Screenshots:
 
+<img src="/Screenshots/SplashScreen.png" width="250"/>      <img src="/Screenshots/Login.png" width="250"/>      <img src="/Screenshots/SignUp.png" width="250"/>
+<img src="/Screenshots/CreateList.png" width="250"/>       <img src="/Screenshots/NavigationDrawer.png" width="250"/>      <img src="/Screenshots/HomePage.png" width="250"/>
